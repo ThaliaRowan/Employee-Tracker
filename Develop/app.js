@@ -57,7 +57,9 @@
                     toInputEmployee();
                 } else if (res.toPut == 2){
                     toInputDepartment();
-                }else {
+                }else if(res.toPut == 1){
+                    toInputRole();
+                } else {
                     connection.end();
                 }
             })
@@ -121,7 +123,7 @@
                     
                     type: "input",
                     name: "dname",
-                    message: "Type the name of your department"
+                    message: "Type the name of this department"
                 },
                
             ]).then(function(answer){
@@ -140,10 +142,51 @@
                         }
                     }
                 )
-            })
-        }
+            });
+        };
 
-    
+    function toInputRole(){
+        inquirer.prompt ([
+        
+            {
+                
+                type: "input",
+                name: "title",
+                message: "Type in the title of this role"
+            },
+            {
+                
+                type: "input",
+                name: "salary",
+                message: "Type in the salary"
+            },
+            {
+                
+                type: "input",
+                name: "dep_id",
+                message: "What is the department id?"
+            },   
+            
+        ]).then(function(answer){
+            connection.query(
+                "INSERT INTO role SET ?",
+                {
+                  title: answer.title,
+                  salary: answer.salary,
+                  department_id: answer.dep_id
+                 
+              
+                }, function(err) {
+                    if(err) {
+                        throw err;
+                    } else {
+                        console.log("Successfully sent to database!");
+                        office();
+                    }
+                }
+            )
+        });
+    };
 
 //using inquirer will make list asking what user wants to do, 
 //if put role is clicked they ask which role they would like to input, storing answer into database
