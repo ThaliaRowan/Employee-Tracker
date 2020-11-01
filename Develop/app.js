@@ -38,6 +38,8 @@ function office() {
         choiceInput();
       } else if(res.option === 1){
         choiceView();
+      } else if(res.option === 2){
+        updateEmployee();
       }
     })
   
@@ -215,6 +217,7 @@ function toViewEmployee(){
       throw err;
     } else {
       console.log(result);
+      office();
   }
   });
 };
@@ -225,6 +228,7 @@ function toViewRole(){
       throw err;
     } else {
       console.log(result);
+      office();
     }
   });
 };
@@ -235,19 +239,42 @@ function toViewDepartment(){
       throw err;
     } else {
       console.log(result);
+      office();
     };
   });
 }
 
 
-
-
-//using inquirer will make list asking what user wants to do,
-//if put role is clicked they ask which role they would like to input, storing answer into database
-//will put a user input after will carry them back to main list
-
-//if user wants to view, it gives them options of what they would like to view
-//will display table of their answer
-
-//If update is chosen, they are allowed to update role
-//a list of the names will appear and they will choose and update role
+function updateEmployee(){
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "empId",
+      message: "Type the id of the employee youd like to update"
+    },
+    {
+      type: "input",
+      name: "roleUpdate",
+      message: "Type the id of the role you'd like to change to"
+    }
+  ]).then(function(res){
+    connection.query("UPDATE employee SET ? WHERE ? ", [
+      {
+        role_id: res.roleUpdate
+      },
+      {
+        id: res.empId
+      }
+      
+    ],function(err, res){
+        if(err){
+          throw err;
+        } else {
+          console.log(res);
+          console.log("Successfully updated!")
+          office();
+        }
+      }
+    )
+  })
+}
