@@ -216,7 +216,7 @@ function toViewEmployee(){
     if(err){
       throw err;
     } else {
-      console.log(result);
+      console.table(result);
       office();
   }
   });
@@ -227,7 +227,7 @@ function toViewRole(){
     if(err){
       throw err;
     } else {
-      console.log(result);
+      console.table(result);
       office();
     }
   });
@@ -238,7 +238,7 @@ function toViewDepartment(){
     if(err){
       throw err;
     } else {
-      console.log(result);
+      console.table(result);
       office();
     };
   });
@@ -270,7 +270,7 @@ function updateEmployee(){
         if(err){
           throw err;
         } else {
-          console.log(res);
+          console.table(res);
           console.log("Successfully updated!")
           office();
         }
