@@ -33,15 +33,18 @@ function office() {
           { name: "Update", value: 2 },
         ],
       },
-    ])
-    .then(function (res) {
-      choiceInput(res);
-    });
+    ]).then(function(res){
+      if(res.option === 0){
+        choiceInput();
+      } else if(res.option === 1){
+        choiceView();
+      }
+    })
+  
 }
 
 // this frunction inputs into employee, role and department tables depending on the user's choice, it calls the functions
-function choiceInput(res) {
-  if (res.option === 0) {
+function choiceInput() {
     inquirer
       .prompt([
         {
@@ -67,7 +70,7 @@ function choiceInput(res) {
         }
       });
   }
-}
+
 
 //function that prompts for employee
 
@@ -183,7 +186,51 @@ function toInputRole() {
         }
       );
     });
+};
+
+
+function choiceView(){
+  inquirer.prompt([
+    {
+      type: "list",
+      name: "viewing",
+      message: "Which table would you like to view?",
+      choices: ([{name: "Employee", value: 0}, {name: "Role", value: 1 }, {name: "Department", value: 2}])
+    }
+  ]).then(function(res){
+    if(res.viewing === 0){
+      toViewEmployee();
+    } else if(res.viewing === 1){
+      toViewRole();
+    }
+    
+  })
 }
+
+function toViewEmployee(){
+  connection.query("SELECT * FROM employee", function(err, result){
+    if(err){
+      throw err;
+    } else {
+      console.log(result);
+  }
+  });
+};
+
+function toViewRole(){
+  connection.query("SELECT * FROM role", function(err, result){
+    if(err){
+      throw err;
+    } else {
+      console.log(result);
+    }
+  });
+};
+
+
+
+
+
 
 //using inquirer will make list asking what user wants to do,
 //if put role is clicked they ask which role they would like to input, storing answer into database
