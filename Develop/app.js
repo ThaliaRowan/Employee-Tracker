@@ -202,6 +202,8 @@ function choiceView(){
       toViewEmployee();
     } else if(res.viewing === 1){
       toViewRole();
+    } else if(res.viewing === 2){
+      toViewDepartment()
     }
     
   })
@@ -227,7 +229,15 @@ function toViewRole(){
   });
 };
 
-
+function toViewDepartment(){
+  connection.query("SELECT * FROM department", function(err, result){
+    if(err){
+      throw err;
+    } else {
+      console.log(result);
+    };
+  });
+}
 
 
 
