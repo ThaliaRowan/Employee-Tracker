@@ -28,3 +28,5 @@ CREATE TABLE employee (
     manager_id int NOT NULL,
     PRIMARY KEY (id)
 );
+
+
